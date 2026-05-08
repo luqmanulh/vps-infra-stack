@@ -103,6 +103,21 @@ This repository adheres strictly to the **separation of configuration and secret
 
 ---
 
+## Domain & DNS Setup
+
+Before deploying, ensure you have a domain name and have configured the following DNS **A records** pointing to your VPS IP address:
+
+| Service | Subdomain | Purpose |
+| :--- | :--- | :--- |
+| **Forgejo** | `git.example.com` | Git repository management |
+| **Uptime Kuma** | `status.example.com` | Service uptime monitoring |
+| **Netdata** | `monitor.example.com` | Host performance metrics |
+
+> [!NOTE]
+> Replace `example.com` with your actual domain name. You will define this in the `.env` file as `DOMAIN_MAIN`.
+
+---
+
 ## Deployment Guide
 
 ### Step 1: Clone the Repository
