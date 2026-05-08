@@ -8,6 +8,14 @@ services:
     image: traefik:${TRAEFIK_TAG}
     container_name: traefik
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
+        reservations:
+          cpus: "0.25"
+          memory: 64M
     environment:
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL=${ACME_EMAIL}
     security_opt:
@@ -26,6 +34,14 @@ services:
     image: codeberg.org/forgejo/forgejo:${FORGEJO_TAG}
     container_name: forgejo
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 256M
     ports:
       - "22:22"
     environment:
@@ -48,6 +64,14 @@ services:
     image: louislam/uptime-kuma:${UPTIME_KUMA_TAG}
     container_name: uptime-kuma
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
     volumes:
       - ./data/uptime-kuma:/app/data
     networks:
@@ -63,6 +87,14 @@ services:
     image: netdata/netdata:stable
     container_name: netdata
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN
