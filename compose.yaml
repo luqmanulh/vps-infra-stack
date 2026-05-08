@@ -8,6 +8,8 @@ services:
     image: traefik:${TRAEFIK_TAG}
     container_name: traefik
     restart: unless-stopped
+    environment:
+      - ACME_EMAIL=${ACME_EMAIL}
     security_opt:
       - no-new-privileges:true
     ports:
