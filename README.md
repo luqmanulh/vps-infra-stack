@@ -47,18 +47,20 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 ### 3. Host SSH Port Migration (Mandatory)
-Since Forgejo needs port 22 to provide standard Git SSH clone URLs, you must move your host's SSH daemon to a different port (e.g., 2222) to avoid conflicts and increase security.
+Since Forgejo needs port 22 to provide standard Git SSH clone URLs, you must move your host's SSH daemon to a custom port to avoid conflicts and increase security.
 Run these commands on your VPS host before deploying:
 
 ```bash
-# Change SSH port to 2222
-sudo sed -i 's/^#Port 22/Port 2222/' /etc/ssh/sshd_config
-sudo sed -i 's/^Port 22/Port 2222/' /etc/ssh/sshd_config
+# Set your secure custom port here!
+CUSTOM_PORT=54321
+
+sudo sed -i "s/^#Port 22/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
+sudo sed -i "s/^Port 22/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
 
 # Restart SSH service
 sudo systemctl restart sshd
 
-# Important: Keep your current SSH session open, open a new terminal, and try connecting with 'ssh -p 2222 user@your_vps_ip' to verify it works before closing the original session!
+# Important: Keep your current SSH session open! Open a new terminal and try connecting with 'ssh -p 54321 user@your_vps_ip' (replace 54321 with your port) to verify it works before closing the original session!
 ```
 
 ### 4. Netdata Constraints
