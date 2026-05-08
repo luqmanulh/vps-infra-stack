@@ -53,9 +53,8 @@ Run these commands on your VPS host before deploying:
 ```bash
 # Set your secure custom port here!
 CUSTOM_PORT=54321
-
-sudo sed -i "s/^#Port 22/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
-sudo sed -i "s/^Port 22/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
+# Safely replace the SSH port (Idempotent RegEx)
+sudo sed -i -E "s/^#?Port [0-9]+/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
 
 # Restart SSH service
 sudo systemctl restart sshd
