@@ -9,7 +9,7 @@ services:
     container_name: traefik
     restart: unless-stopped
     environment:
-      - ACME_EMAIL=${ACME_EMAIL}
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL=${ACME_EMAIL}
     security_opt:
       - no-new-privileges:true
     ports:

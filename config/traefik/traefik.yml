@@ -16,8 +16,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: "${ACME_EMAIL}" # Traefik will pull this from the .env file!
-      storage: acme.json
+      storage: /acme.json
       httpChallenge:
         entryPoint: web
 
