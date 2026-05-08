@@ -19,7 +19,20 @@ The stack uses a single Docker network (`proxy`) to isolate internal traffic fro
 
 If you deploy this stack on a 1GB RAM VPS without prior configuration, the Linux OOM (Out of Memory) killer **will** terminate your containers during spikes (especially when Forgejo runs heavy Git operations or Netdata compiles metrics).
 
-### 1. Mandatory Swap File Configuration
+### 1. Essential System Packages
+Minimal distributions like Rocky Linux 10 do not ship with Git pre-installed. You need it to clone this repository.
+Run the appropriate command for your OS:
+
+- **Rocky Linux / RHEL / CentOS**:
+  ```bash
+  sudo dnf install git -y
+  ```
+- **Ubuntu / Debian**:
+  ```bash
+  sudo apt update && sudo apt install git -y
+  ```
+
+### 2. Mandatory Swap File Configuration
 You **must** configure a swap file of at least 2GB. Run these commands on your VPS host before deploying:
 
 ```bash
@@ -33,7 +46,22 @@ sudo swapon /swapfile
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
-### 2. Netdata Constraints
+### 3. Host SSH Port Migration (Mandatory)
+Since Forgejo needs port 22 to provide standard Git SSH clone URLs, you must move your host's SSH daemon to a different port (e.g., 2222) to avoid conflicts and increase security.
+Run these commands on your VPS host before deploying:
+
+```bash
+# Change SSH port to 2222
+sudo sed -i 's/^#Port 22/Port 2222/' /etc/ssh/sshd_config
+sudo sed -i 's/^Port 22/Port 2222/' /etc/ssh/sshd_config
+
+# Restart SSH service
+sudo systemctl restart sshd
+
+# Important: Keep your current SSH session open, open a new terminal, and try connecting with 'ssh -p 2222 user@your_vps_ip' to verify it works before closing the original session!
+```
+
+### 4. Netdata Constraints
 Netdata is extremely memory-intensive by default. This repository includes a pre-configured `netdata.conf` located in `data/netdata/netdataconfig/netdata/netdata.conf` which heavily restricts its page cache size and database engine disk space to keep its footprint minimal.
 
 ---
