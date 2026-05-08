@@ -116,9 +116,16 @@ cp .env.example .env
 ```
 Edit the `.env` file using your preferred text editor (`nano`, `vim`, etc.) and populate it with your actual domain name, email address (for Let's Encrypt), and secure passwords.
 
-### Step 3: Set Strict Permissions on acme.json
-Traefik requires the Let's Encrypt certificate storage file to have strict permissions, otherwise it will refuse to start.
+### Step 3: Prepare Persistent Data Volume
+The `data/` directory is intentionally ignored by Git for security. You must manually create the directory and the empty `acme.json` file so Docker doesn't mistakenly create it as a directory. Traefik also requires strict permissions on this file.
 ```bash
+# Create the persistent data directory
+mkdir -p data
+
+# Create an empty acme.json file
+touch data/acme.json
+
+# Lock down permissions
 chmod 600 data/acme.json
 ```
 
