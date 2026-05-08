@@ -1,0 +1,22 @@
+# .gitignore
+
+# -----------------
+# Secrets & Configs
+# -----------------
+.env
+*.key
+*.crt
+*.pem
+acme.json
+
+# -----------------
+# Persistent Data Volumes
+# -----------------
+data/
+/config/traefik/acme.json
+
+# -----------------
+# OS/Misc
+# -----------------
+.DS_Store
+Thumbs.db
