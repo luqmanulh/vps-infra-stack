@@ -25,7 +25,7 @@ Run the appropriate command for your OS:
 
 - **Rocky Linux / RHEL / CentOS**:
   ```bash
-  sudo dnf install git -y
+  sudo dnf install git policycoreutils-python-utils -y
   ```
 - **Ubuntu / Debian**:
   ```bash
@@ -48,13 +48,38 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 ### 3. Host SSH Port Migration (Mandatory)
 Since Forgejo needs port 22 to provide standard Git SSH clone URLs, you must move your host's SSH daemon to a custom port to avoid conflicts and increase security.
-Run these commands on your VPS host before deploying:
 
+**For Rocky Linux / RHEL / CentOS (with SELinux & Firewalld):**
 ```bash
 # Set your secure custom port here!
 CUSTOM_PORT=54321
+
 # Safely replace the SSH port (Idempotent RegEx)
 sudo sed -i -E "s/^#?Port [0-9]+/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
+
+# Tell SELinux to allow the new SSH port
+sudo semanage port -a -t ssh_port_t -p tcp $CUSTOM_PORT
+
+# Allow the new port through the firewall
+sudo firewall-cmd --permanent --add-port=$CUSTOM_PORT/tcp
+sudo firewall-cmd --reload
+
+# Restart SSH service
+sudo systemctl restart sshd
+
+# Important: Keep your current SSH session open! Open a new terminal and try connecting with 'ssh -p 54321 user@your_vps_ip' (replace 54321 with your port) to verify it works before closing the original session!
+```
+
+**For Ubuntu / Debian (with UFW):**
+```bash
+# Set your secure custom port here!
+CUSTOM_PORT=54321
+
+# Safely replace the SSH port (Idempotent RegEx)
+sudo sed -i -E "s/^#?Port [0-9]+/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
+
+# Allow the new port through the firewall
+sudo ufw allow $CUSTOM_PORT/tcp
 
 # Restart SSH service
 sudo systemctl restart sshd
