@@ -20,7 +20,8 @@ The stack uses a single Docker network (`proxy`) to isolate internal traffic fro
 If you deploy this stack on a 1GB RAM VPS without prior configuration, the Linux OOM (Out of Memory) killer **will** terminate your containers during spikes (especially when Forgejo runs heavy Git operations or Netdata compiles metrics).
 
 ### 0. Install Docker & Docker Compose
-Ensure Docker Engine and the Docker Compose plugin are installed on your VPS. Please follow the [Official Docker Installation Guide](https://docs.docker.com/engine/install/) *(Ctrl+Click or Middle-Click to open in a new tab)*.
+Ensure Docker Engine and the Docker Compose plugin are installed on your VPS. Please follow the <a href="https://docs.docker.com/engine/install/" target="_blank">Official Docker Installation Guide</a>.
+
 
 ### 1. Essential System Packages
 Minimal distributions like Rocky Linux 10 do not ship with Git pre-installed. You need it to clone this repository.
