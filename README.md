@@ -51,7 +51,7 @@ This repository adheres strictly to the **separation of configuration and secret
 ### Step 1: Clone the Repository
 Clone this repository to your VPS.
 ```bash
-git clone <your-repository-url> vps-infra
+git clone https://github.com/luqmanulh/vps-infra-stack vps-infra
 cd vps-infra
 ```
 
