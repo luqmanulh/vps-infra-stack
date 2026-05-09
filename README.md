@@ -85,7 +85,7 @@ CUSTOM_PORT=54321
 sudo mkdir -p /etc/systemd/system/ssh.socket.d
 
 # Override the default ListenStream port (clears port 22, sets new port)
-echo -e "[Socket]\nListenStream=\nListenStream=$CUSTOM_PORT" | sudo tee /etc/systemd/system/ssh.socket.d/port.conf
+echo -e "[Socket]\nListenStream=\nListenStream=0.0.0.0:$CUSTOM_PORT" | sudo tee /etc/systemd/system/ssh.socket.d/port.conf
 
 # Reload systemd and restart the SSH socket
 sudo systemctl daemon-reload
