@@ -94,6 +94,7 @@ services:
   netdata:
     image: netdata/netdata:stable
     container_name: netdata
+    init: true
     restart: unless-stopped
     deploy:
       resources:
