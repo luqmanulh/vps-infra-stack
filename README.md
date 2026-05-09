@@ -73,9 +73,9 @@ sudo systemctl restart sshd
 # Important: Keep your current SSH session open! Open a new terminal and try connecting with 'ssh -p 54321 user@your_vps_ip' (replace 54321 with your port) to verify it works before closing the original session!
 ```
 
-**For Ubuntu 22.10+ / 24.04 LTS (with UFW & ssh.socket):**
+**For Debian 13+ / Ubuntu 22.10+ (with UFW & ssh.socket):**
 > [!NOTE]
-> Recent Ubuntu versions use `ssh.socket` by default. Changing the port in `sshd_config` is ignored. You must override the systemd socket configuration.
+> Debian 13 and recent Ubuntu versions use `ssh.socket` by default. Changing the port in `sshd_config` is ignored. You must override the systemd socket configuration.
 
 ```bash
 # Set your secure custom port here!
@@ -97,7 +97,7 @@ sudo ufw allow $CUSTOM_PORT/tcp
 # Important: Keep your current SSH session open! Open a new terminal and try connecting with 'ssh -p 54321 user@your_vps_ip' (replace 54321 with your port) to verify it works before closing the original session!
 ```
 
-**For Debian / Older Ubuntu 22.04 (with UFW & ssh.service):**
+**For Older Debian 12- / Older Ubuntu 22.04 (with UFW & ssh.service):**
 ```bash
 # Set your secure custom port here!
 CUSTOM_PORT=54321
