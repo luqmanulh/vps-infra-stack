@@ -85,7 +85,7 @@ sudo sed -i -E "s/^#?Port [0-9]+/Port $CUSTOM_PORT/" /etc/ssh/sshd_config
 sudo ufw allow $CUSTOM_PORT/tcp
 
 # Restart SSH service
-sudo systemctl restart sshd
+sudo systemctl restart ssh
 
 # Important: Keep your current SSH session open! Open a new terminal and try connecting with 'ssh -p 54321 user@your_vps_ip' (replace 54321 with your port) to verify it works before closing the original session!
 ```
